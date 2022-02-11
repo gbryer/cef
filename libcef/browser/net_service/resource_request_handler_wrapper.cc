@@ -520,6 +520,15 @@ class InterceptedRequestHandlerWrapper : public InterceptedRequestHandler {
     request->headers.SetHeaderIfMissing(net::HttpRequestHeaders::kUserAgent,
                                         init_state_->user_agent_);
 
+       // if browser says otherwise, override with it
+   std::string browser_user_agent =
+     GetUserAgentFromBrowser(init_state_->browser_, request->url);
+   if(!browser_user_agent.empty()) {
+     request->headers.SetHeader(net::HttpRequestHeaders::kUserAgent,
+                                browser_user_agent);
+   }
+
+
     const bool is_external = IsExternalRequest(request);
 
     // External requests will not have a default handler.

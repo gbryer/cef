@@ -259,6 +259,17 @@ class CefRequestHandler : public virtual CefBaseRefCounted {
   ///
   /*--cef()--*/
   virtual void OnDocumentAvailableInMainFrame(CefRefPtr<CefBrowser> browser) {}
+
+  ///
+  // Gives the opportunity to override user agent before the request becomes
+  // readonly.
+  ///
+  virtual bool GetOverrideUserAgent(CefRefPtr<CefBrowser> browser,
+                                    CefRefPtr<CefDictionaryValue> request_info,
+                                    CefString& overrideUserAgent) {
+    return false;
+  }
+
 };
 
 #endif  // CEF_INCLUDE_CEF_REQUEST_HANDLER_H_
