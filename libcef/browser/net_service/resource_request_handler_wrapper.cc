@@ -36,9 +36,29 @@
 #include "ui/base/page_transition_types.h"
 #include "url/origin.h"
 
+#include "include/cef_values.h"
+#include "url/gurl.h"
+
 namespace net_service {
 
 namespace {
+
+    std::string GetUserAgentFromBrowser(CefRefPtr<CefBrowserHostBase> hostBrowser, const GURL& gUrl) {
+
+        CefRefPtr<CefDictionaryValue> request_info = CefDictionaryValue::Create();
+        request_info->SetString("url", gUrl.spec());
+
+        CefString overrideUserAgent;
+        bool override = GetOverrideUserAgent(hostBrowser->GetBrowser(), request_info, overrideUserAgent);
+
+        std::string userAgent;
+
+        if (override) {
+            userAgent = overrideUserAgent;
+        }
+
+        return userAgent;
+    }
 
 const int kLoadNoCookiesFlags =
     net::LOAD_DO_NOT_SEND_COOKIES | net::LOAD_DO_NOT_SAVE_COOKIES;
@@ -520,12 +540,12 @@ class InterceptedRequestHandlerWrapper : public InterceptedRequestHandler {
     request->headers.SetHeaderIfMissing(net::HttpRequestHeaders::kUserAgent,
                                         init_state_->user_agent_);
 
-       // if browser says otherwise, override with it
-   std::string browser_user_agent =
-     GetUserAgentFromBrowser(init_state_->browser_, request->url);
+       // if browser says otherwise, override with it       // CefBrowserHostBase init_state_->browser_
+       //
+   std::string browser_user_agent = GetUserAgentFromBrowser(init_state_->browser_, request->url);
+
    if(!browser_user_agent.empty()) {
-     request->headers.SetHeader(net::HttpRequestHeaders::kUserAgent,
-                                browser_user_agent);
+     request->headers.SetHeader(net::HttpRequestHeaders::kUserAgent, browser_user_agent);
    }
 
 
