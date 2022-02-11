@@ -7,7 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="247ef7a5-4713-42e4-b0a0-7e60f3bc07cb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/include/cef_request_handler.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/cef_request_handler.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libcef/browser/net_service/resource_request_handler_wrapper.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libcef/browser/net_service/resource_request_handler_wrapper.cc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +48,7 @@
       <option name="presentableId" value="Default" />
       <updated>1644557506663</updated>
       <workItem from="1644557507942" duration="239000" />
+      <workItem from="1644593438779" duration="728000" />
     </task>
     <servers />
   </component>

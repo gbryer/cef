@@ -45,16 +45,24 @@ namespace {
 
     std::string GetUserAgentFromBrowser(CefRefPtr<CefBrowserHostBase> hostBrowser, const GURL& gUrl) {
 
-        CefRefPtr<CefDictionaryValue> request_info = CefDictionaryValue::Create();
-        request_info->SetString("url", gUrl.spec());
-
-        CefString overrideUserAgent;
-        bool override = GetOverrideUserAgent(hostBrowser->GetBrowser(), request_info, overrideUserAgent);
-
         std::string userAgent;
 
-        if (override) {
-            userAgent = overrideUserAgent;
+        CefRefPtr<CefClient> client = hostBrowser->GetHost()->GetClient();
+        if (client) {
+
+            CefRefPtr<CefRequestHandler> request_handler = client->GetRequestHandler();
+            if (request_handler) {
+
+                CefRefPtr <CefDictionaryValue> request_info = CefDictionaryValue::Create();
+                request_info->SetString("url", gUrl.spec());
+
+                CefString overrideUserAgent;
+                bool override = request_handler->GetOverrideUserAgent(hostBrowser->GetBrowser(), request_info, overrideUserAgent);
+
+                if (override) {
+                    userAgent = overrideUserAgent;
+                }
+            }
         }
 
         return userAgent;
