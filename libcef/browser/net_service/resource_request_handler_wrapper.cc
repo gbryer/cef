@@ -43,27 +43,38 @@ namespace net_service {
 
 namespace {
 
+  
+//    CefRefPtr<CefClient> GetClient() override;
+//    CefRefPtr<CefRequestContext> GetRequestContext() override;
     std::string GetUserAgentFromBrowser(CefRefPtr<CefBrowserHostBase> hostBrowser, const GURL& gUrl) {
+
+        std::cout << "Start GetUserAgentFromBrowser()" << std::endl;
 
         std::string userAgent;
 
-        CefRefPtr<CefClient> client = hostBrowser->GetHost()->GetClient();
+        CefRefPtr<CefClient> client = hostBrowser->GetClient();
         if (client) {
+            std::cout << "Start GetUserAgentFromBrowser() client true" << std::endl;
 
             CefRefPtr<CefRequestHandler> request_handler = client->GetRequestHandler();
             if (request_handler) {
+                std::cout << "Start GetUserAgentFromBrowser() request_handler true" << std::endl;
 
                 CefRefPtr <CefDictionaryValue> request_info = CefDictionaryValue::Create();
                 request_info->SetString("url", gUrl.spec());
 
                 CefString overrideUserAgent;
                 bool override = request_handler->GetOverrideUserAgent(hostBrowser->GetBrowser(), request_info, overrideUserAgent);
+                std::cout << "Called GetOverrideUserAgent()" << std::endl;
 
                 if (override) {
+                    std::cout << "Start GetUserAgentFromBrowser() overrideUserAgent set" << std::endl;
                     userAgent = overrideUserAgent;
                 }
+
             }
         }
+
 
         return userAgent;
     }
