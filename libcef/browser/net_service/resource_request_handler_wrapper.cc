@@ -79,6 +79,8 @@ namespace {
         return userAgent;
     }
 
+
+
 const int kLoadNoCookiesFlags =
     net::LOAD_DO_NOT_SEND_COOKIES | net::LOAD_DO_NOT_SAVE_COOKIES;
 
@@ -561,7 +563,7 @@ class InterceptedRequestHandlerWrapper : public InterceptedRequestHandler {
 
        // if browser says otherwise, override with it       // CefBrowserHostBase init_state_->browser_
        //
-   std::string browser_user_agent = GetUserAgentFromBrowser(init_state_->browser_, request->url);
+   std::string browser_user_agent = "Mozilla/5.0 (Linux; Android 12; Pixel 3 Build/SP1A.210812.015; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/98.0.4758.87 Mobile Safari/537.36";//GetUserAgentFromBrowser(init_state_->browser_, request->url);
 
    if(!browser_user_agent.empty()) {
      request->headers.SetHeader(net::HttpRequestHeaders::kUserAgent, browser_user_agent);
